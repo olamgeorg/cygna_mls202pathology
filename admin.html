@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light" data-bg="plain" data-font="medium">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Admin Dashboard - Cygna MLS202 Pathology Quiz</title>
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#0f766e">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='110' fill='%230f766e'/%3E%3Ccircle cx='256' cy='256' r='150' fill='none' stroke='%23ffffff' stroke-width='36'/%3E%3Cpath d='M256 150v212M150 256h212' stroke='%23ffffff' stroke-width='36' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="manifest" href="manifest.json">
+<script>
+(function () {
+  try {
+    var s = JSON.parse(localStorage.getItem("cygna_mls202pathology_settings") || "{}");
+    var r = document.documentElement;
+    if (s.theme) r.setAttribute("data-theme", s.theme);
+    if (s.bg) r.setAttribute("data-bg", s.bg);
+    if (s.font) r.setAttribute("data-font", s.font);
+  } catch (e) {}
+})();
+</script>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <svg class="brand-mark" viewBox="0 0 48 48" aria-hidden="true">
+      <rect width="48" height="48" rx="12" fill="currentColor" opacity="0.18"/>
+      <circle cx="24" cy="24" r="12" fill="none" stroke="currentColor" stroke-width="4"/>
+      <path d="M24 15v18M15 24h18" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+    </svg>
+    <div class="brand-text">
+      <span class="brand-logo">CYGNA</span>
+      <span class="brand-sub">MLS202 Pathology · Admin</span>
+    </div>
+  </div>
+  <div class="topbar-actions">
+    <a class="btn btn-ghost btn-sm" href="index.html">← Quiz App</a>
+    <button id="logoutBtn" class="btn btn-danger btn-sm" type="button">Logout</button>
+  </div>
+</header>
+
+<main class="admin-wrap">
+
+  <div id="gate" class="card center">
+    <h3>Checking admin access…</h3>
+    <p class="muted">Only the administrator can open this page.</p>
+  </div>
+
+  <div id="adminApp" class="hidden">
+
+    <div class="userbar" style="margin-top:0;margin-bottom:1rem">
+      <div class="userbar-welcome">
+        <span class="userbar-hi">Admin:</span>
+        <strong id="adminName">Olamide George</strong>
+        <span class="badge">Admin</span>
+      </div>
+      <div class="userbar-actions">
+        <button id="refreshBtn" class="btn btn-outline btn-sm" type="button">⟳ Refresh</button>
+      </div>
+    </div>
+
+    <div id="adminMsg" class="notice notice-warn hidden" role="alert"></div>
+
+    <div class="admin-cards">
+      <div class="stat"><b id="aStudents">0</b><span>Total students</span></div>
+      <div class="stat"><b id="aQuizzes">0</b><span>Total quizzes</span></div>
+      <div class="stat"><b id="aAvg">0%</b><span>Average score</span></div>
+      <div class="stat stat-good"><b id="aPass">0%</b><span>Pass rate (50%+)</span></div>
+    </div>
+
+    <div class="admin-tabs">
+      <button class="btn btn-primary btn-sm" type="button" data-tab="students">👥 Students</button>
+      <button class="btn btn-outline btn-sm" type="button" data-tab="scores">📋 All Scores</button>
+      <button class="btn btn-outline btn-sm" type="button" data-tab="analysis">📈 Weak vs Strong</button>
+    </div>
+
+    <!-- STUDENTS -->
+    <section id="tab-students" class="card">
+      <div class="card-head"><h3>Students</h3><span id="studentCount" class="muted small"></span></div>
+      <div class="filters"><input id="studentSearch" type="search" placeholder="Search name or email…"></div>
+      <div class="table-wrap">
+        <table class="table">
+          <thead><tr><th>Name</th><th>Email</th><th>Date Joined</th><th>Quizzes</th><th>Avg %</th><th>Actions</th></tr></thead>
+          <tbody id="studentsBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- SCORES -->
+    <section id="tab-scores" class="card hidden">
+      <div class="card-head">
+        <h3>All Scores</h3>
+        <div class="btn-row">
+          <span id="scoreCount" class="muted small"></span>
+          <button id="exportBtn" class="btn btn-success btn-sm" type="button">⬇ Export CSV</button>
+        </div>
+      </div>
+      <div class="filters">
+        <input id="fSearch" type="search" placeholder="Search name or email…">
+        <select id="fTopic"><option value="">All topics</option></select>
+        <select id="fMode">
+          <option value="">All modes</option>
+          <option value="practice">Practice</option><option value="exam">Exam</option><option value="timed">Timed</option>
+        </select>
+        <input id="fFrom" type="date" aria-label="From date">
+        <input id="fTo" type="date" aria-label="To date">
+        <button id="fReset" class="btn btn-ghost btn-sm" type="button">Reset filters</button>
+      </div>
+      <div class="table-wrap">
+        <table class="table" style="min-width:900px">
+          <thead><tr><th>Name</th><th>Email</th><th>Topics</th><th>Mode</th><th>Score</th><th>%</th><th>Grade</th><th>Date</th><th>Time Used</th><th></th></tr></thead>
+          <tbody id="scoresBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ANALYSIS -->
+    <section id="tab-analysis" class="hidden">
+      <div class="card">
+        <h3>All students: performance per topic</h3>
+        <div id="allTopicBars" class="topic-bars"></div>
+        <div class="weak-strong">
+          <div><h4>💪 Strong topics (all students)</h4><ul id="allStrong" class="plain-list"></ul></div>
+          <div><h4>⚠ Weak topics (all students)</h4><ul id="allWeak" class="plain-list"></ul></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-head"><h3>Per student</h3>
+          <div class="filters" style="margin:0;min-width:240px"><select id="studentSelect"><option value="">Select a student…</option></select></div>
+        </div>
+        <div id="studentTopicBars" class="topic-bars"></div>
+        <div class="weak-strong">
+          <div><h4>💪 Strong topics</h4><ul id="sStrong" class="plain-list"></ul></div>
+          <div><h4>⚠ Weak topics</h4><ul id="sWeak" class="plain-list"></ul></div>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<div id="confirmOverlay" class="overlay hidden" role="dialog" aria-modal="true">
+  <div class="overlay-box">
+    <h3 id="confirmTitle">Are you sure?</h3>
+    <p id="confirmText" class="muted"></p>
+    <div class="btn-row center-row">
+      <button id="confirmNo" class="btn btn-outline" type="button">Cancel</button>
+      <button id="confirmYes" class="btn btn-danger" type="button">Delete</button>
+    </div>
+  </div>
+</div>
+<div id="toast" class="toast hidden" role="status"></div>
+
+<footer class="footer">
+  <span>© <span id="year">2026</span> cygna.co - cygna.consult</span>
+  <span class="footer-sub">Cygna MLS202 Pathology Quiz · Admin</span>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="supabase-config.js"></script>
+<script src="questions.js"></script>
+<script src="admin.js"></script>
+</body>
+</html>

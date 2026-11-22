@@ -1,0 +1,32 @@
+{
+  "name": "cygna_mls202pathology",
+  "short_name": "cygna_mls202pathology",
+  "description": "Cygna MLS202 Pathology Quiz - MLS 202 Pathology practice questions. © cygna.co - cygna.consult",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f0fdfa",
+  "theme_color": "#0f766e",
+  "categories": ["education"],
+  "icons": [
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='110' fill='%230f766e'/%3E%3Ccircle cx='256' cy='256' r='150' fill='none' stroke='%23ffffff' stroke-width='36'/%3E%3Cpath d='M256 150v212M150 256h212' stroke='%23ffffff' stroke-width='36' stroke-linecap='round'/%3E%3C/svg%3E",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='110' fill='%230f766e'/%3E%3Ccircle cx='256' cy='256' r='150' fill='none' stroke='%23ffffff' stroke-width='36'/%3E%3Cpath d='M256 150v212M150 256h212' stroke='%23ffffff' stroke-width='36' stroke-linecap='round'/%3E%3C/svg%3E",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' fill='%230f766e'/%3E%3Ccircle cx='256' cy='256' r='120' fill='none' stroke='%23ffffff' stroke-width='30'/%3E%3Cpath d='M256 166v180M166 256h180' stroke='%23ffffff' stroke-width='30' stroke-linecap='round'/%3E%3C/svg%3E",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ]
+}

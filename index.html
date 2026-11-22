@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light" data-bg="plain" data-font="medium">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Cygna MLS202 Pathology Quiz</title>
+<meta name="description" content="Cygna MLS202 Pathology Quiz - MLS 202 Pathology practice questions. © cygna.co - cygna.consult">
+<meta name="application-name" content="cygna_mls202pathology">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="cygna_mls202pathology">
+<meta name="theme-color" content="#0f766e">
+
+<!-- Icons: inline SVG data URIs (no external links) -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='110' fill='%230f766e'/%3E%3Ccircle cx='256' cy='256' r='150' fill='none' stroke='%23ffffff' stroke-width='36'/%3E%3Cpath d='M256 150v212M150 256h212' stroke='%23ffffff' stroke-width='36' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' fill='%230f766e'/%3E%3Ccircle cx='256' cy='256' r='150' fill='none' stroke='%23ffffff' stroke-width='36'/%3E%3Cpath d='M256 150v212M150 256h212' stroke='%23ffffff' stroke-width='36' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="manifest" href="manifest.json">
+
+<!-- Apply saved settings BEFORE first paint (no flash) -->
+<script>
+(function () {
+  try {
+    var s = JSON.parse(localStorage.getItem("cygna_mls202pathology_settings") || "{}");
+    var r = document.documentElement;
+    if (s.theme) r.setAttribute("data-theme", s.theme);
+    if (s.bg) r.setAttribute("data-bg", s.bg);
+    if (s.font) r.setAttribute("data-font", s.font);
+  } catch (e) {}
+})();
+</script>
+
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ============ TOP BAR ============ -->
+<header class="topbar">
+  <div class="brand">
+    <svg class="brand-mark" viewBox="0 0 48 48" aria-hidden="true">
+      <rect width="48" height="48" rx="12" fill="currentColor" opacity="0.18"/>
+      <circle cx="24" cy="24" r="12" fill="none" stroke="currentColor" stroke-width="4"/>
+      <path d="M24 15v18M15 24h18" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+    </svg>
+    <div class="brand-text">
+      <span class="brand-logo">CYGNA</span>
+      <span class="brand-sub">MLS202 Pathology</span>
+    </div>
+  </div>
+  <div class="topbar-actions">
+    <button id="installBtn" class="btn btn-ghost btn-sm hidden" type="button">⬇ Install App</button>
+    <button id="settingsBtn" class="icon-btn" type="button" aria-label="Settings" title="Settings">
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="3"/>
+        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h0a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51h0a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v0a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+      </svg>
+    </button>
+  </div>
+</header>
+
+<!-- ============ USER BAR (Welcome / Admin / Logout) - flex-wrap, no overlap ============ -->
+<div id="userBar" class="userbar hidden">
+  <div class="userbar-welcome">
+    <span class="userbar-hi">Welcome,</span>
+    <strong id="welcomeName" class="userbar-name">Student</strong>
+    <span id="adminBadge" class="badge hidden">Admin</span>
+  </div>
+  <div class="userbar-actions">
+    <a id="adminLink" class="btn btn-outline btn-sm hidden" href="admin.html">🛡 Admin</a>
+    <button id="logoutBtn" class="btn btn-danger btn-sm" type="button">Logout</button>
+  </div>
+</div>
+
+<main class="app">
+
+  <!-- Offline / network notice -->
+  <div id="netBanner" class="net-banner hidden" role="status">You are offline. Quiz still works; scores sync when you are back online.</div>
+
+  <!-- ============ AUTH SCREEN ============ -->
+  <section id="screen-auth" class="screen">
+    <div class="card auth-card">
+      <div class="auth-head">
+        <div class="auth-logo">CYGNA</div>
+        <h1 class="auth-title">Cygna MLS202 Pathology Quiz</h1>
+        <p class="auth-sub">MLS 202 - Pathology</p>
+      </div>
+
+      <div id="configWarn" class="notice notice-warn hidden"></div>
+
+      <div class="tabs" role="tablist">
+        <button id="tabLogin" class="tab active" type="button" role="tab" data-tab="login">Login</button>
+        <button id="tabSignup" class="tab" type="button" role="tab" data-tab="signup">Sign Up</button>
+      </div>
+
+      <!-- Login -->
+      <form id="loginForm" class="form" autocomplete="on" novalidate>
+        <label class="field">
+          <span>Email</span>
+          <input id="loginEmail" type="email" name="email" autocomplete="email" placeholder="you@example.com" required>
+        </label>
+        <label class="field">
+          <span>Password</span>
+          <div class="pw-wrap">
+            <input id="loginPassword" type="password" name="password" autocomplete="current-password" placeholder="Your password" required>
+            <button type="button" class="pw-toggle" data-target="loginPassword" aria-label="Show password">👁</button>
+          </div>
+        </label>
+        <button id="loginBtn" class="btn btn-primary btn-block" type="submit">Login</button>
+        <button id="forgotLink" class="link-btn" type="button">Forgot password?</button>
+      </form>
+
+      <!-- Sign up -->
+      <form id="signupForm" class="form hidden" autocomplete="on" novalidate>
+        <label class="field">
+          <span>Full Name</span>
+          <input id="signupName" type="text" name="name" autocomplete="name" placeholder="Your full name" required>
+        </label>
+        <label class="field">
+          <span>Email</span>
+          <input id="signupEmail" type="email" name="email" autocomplete="email" placeholder="you@example.com" required>
+        </label>
+        <label class="field">
+          <span>Password (min 6 characters)</span>
+          <div class="pw-wrap">
+            <input id="signupPassword" type="password" name="new-password" autocomplete="new-password" placeholder="Create a password" minlength="6" required>
+            <button type="button" class="pw-toggle" data-target="signupPassword" aria-label="Show password">👁</button>
+          </div>
+        </label>
+        <button id="signupBtn" class="btn btn-primary btn-block" type="submit">Create Account</button>
+      </form>
+
+      <!-- Forgot password -->
+      <form id="forgotForm" class="form hidden" novalidate>
+        <p class="muted">Enter your email. We will send you a link to reset your password.</p>
+        <label class="field">
+          <span>Email</span>
+          <input id="forgotEmail" type="email" autocomplete="email" placeholder="you@example.com" required>
+        </label>
+        <button id="forgotBtn" class="btn btn-primary btn-block" type="submit">Send Reset Link</button>
+        <button id="backToLogin" class="link-btn" type="button">← Back to login</button>
+      </form>
+
+      <!-- Set new password (after clicking the email reset link) -->
+      <form id="resetForm" class="form hidden" novalidate>
+        <p class="muted">Choose a new password for your account.</p>
+        <label class="field">
+          <span>New password (min 6 characters)</span>
+          <input id="newPassword" type="password" autocomplete="new-password" minlength="6" placeholder="New password" required>
+        </label>
+        <button id="resetBtn" class="btn btn-primary btn-block" type="submit">Update Password</button>
+      </form>
+
+      <div id="authMsg" class="notice hidden" role="alert"></div>
+    </div>
+  </section>
+
+  <!-- ============ HOME SCREEN ============ -->
+  <section id="screen-home" class="screen hidden">
+
+    <div class="card welcome-card">
+      <div>
+        <h2 class="welcome-title">Hello, <span id="homeName">Student</span> 👋</h2>
+        <p class="welcome-text">Practise MLS 202 Pathology questions built only from your lecturer's notes. Pick your topics, choose a mode and start.</p>
+      </div>
+      <div class="welcome-stats">
+        <div class="mini-stat"><b id="homeTotalQ">280</b><span>Questions</span></div>
+        <div class="mini-stat"><b>7</b><span>Topics</span></div>
+        <div class="mini-stat"><b id="homeTaken">0</b><span>Quizzes taken</span></div>
+      </div>
+    </div>
+
+    <!-- Topic selection -->
+    <div class="card">
+      <div class="card-head">
+        <h3>1. Select Topics</h3>
+        <div class="btn-row">
+          <button id="selectAllBtn" class="btn btn-outline btn-sm" type="button">Select All</button>
+          <button id="clearAllBtn" class="btn btn-ghost btn-sm" type="button">Clear All</button>
+        </div>
+      </div>
+      <div id="topicList" class="topic-list"></div>
+      <p class="muted small">Selected: <b id="selTopicCount">0</b> topic(s) · <b id="selQuestionPool">0</b> questions available</p>
+    </div>
+
+    <!-- Number of questions -->
+    <div class="card">
+      <div class="card-head"><h3>2. Number of Questions</h3></div>
+      <div id="countOptions" class="chip-row">
+        <button class="chip" type="button" data-count="10">10</button>
+        <button class="chip" type="button" data-count="20">20</button>
+        <button class="chip active" type="button" data-count="30">30</button>
+        <button class="chip" type="button" data-count="40">40</button>
+        <button class="chip" type="button" data-count="50">50</button>
+        <button class="chip" type="button" data-count="100">100</button>
+        <button class="chip" type="button" data-count="all">All</button>
+      </div>
+    </div>
+
+    <!-- Mode selection -->
+    <div class="card">
+      <div class="card-head"><h3>3. Choose Mode</h3></div>
+      <div id="modeOptions" class="mode-grid">
+        <button class="mode-card active" type="button" data-mode="practice">
+          <span class="mode-ico">📖</span>
+          <span class="mode-name">Practice Mode</span>
+          <span class="mode-desc">Answer + explanation straight away. No timer.</span>
+        </button>
+        <button class="mode-card" type="button" data-mode="exam">
+          <span class="mode-ico">📝</span>
+          <span class="mode-name">Exam Mode</span>
+          <span class="mode-desc">No answers until the end. Timer on. Full review after.</span>
+        </button>
+        <button class="mode-card" type="button" data-mode="timed">
+          <span class="mode-ico">⏱</span>
+          <span class="mode-name">Timed Mode</span>
+          <span class="mode-desc">60 seconds per question. Auto-next. Pause allowed.</span>
+        </button>
+      </div>
+    </div>
+
+    <div id="homeMsg" class="notice notice-warn hidden" role="alert"></div>
+
+    <div class="home-actions">
+      <button id="startBtn" class="btn btn-primary btn-lg" type="button">▶ Start Quiz</button>
+      <button id="myScoresBtn" class="btn btn-outline btn-lg" type="button">📊 My Scores</button>
+    </div>
+  </section>
+
+  <!-- ============ QUIZ SCREEN ============ -->
+  <section id="screen-quiz" class="screen hidden">
+    <div class="card quiz-card">
+      <div class="quiz-top">
+        <div class="quiz-meta">
+          <span id="qNum" class="q-num">Question 1 / 10</span>
+          <span id="qModeTag" class="tag">Practice</span>
+        </div>
+        <div class="quiz-tools">
+          <div id="timerBox" class="timer hidden" aria-live="off">⏱ <span id="timerText">00:00</span></div>
+          <button id="pauseBtn" class="btn btn-outline btn-sm hidden" type="button">⏸ Pause</button>
+        </div>
+      </div>
+
+      <div class="progress" aria-hidden="true"><div id="progressFill" class="progress-fill"></div></div>
+
+      <div class="q-tags">
+        <span id="qTopic" class="tag tag-topic"></span>
+        <span id="qDiff" class="tag tag-diff"></span>
+      </div>
+
+      <h2 id="questionText" class="question-text">Loading…</h2>
+
+      <div id="options" class="options" role="group" aria-label="Answer options"></div>
+
+      <div id="feedback" class="feedback hidden" role="status"></div>
+
+      <div class="quiz-nav">
+        <button id="prevBtn" class="btn btn-outline" type="button">← Previous</button>
+        <button id="skipBtn" class="btn btn-ghost" type="button">Skip</button>
+        <button id="nextBtn" class="btn btn-primary" type="button">Next →</button>
+        <button id="submitBtn" class="btn btn-success hidden" type="button">Submit ✔</button>
+      </div>
+      <div class="quiz-foot">
+        <button id="quitBtn" class="link-btn" type="button">Quit quiz</button>
+        <span id="answeredInfo" class="muted small"></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ RESULT SCREEN ============ -->
+  <section id="screen-result" class="screen hidden">
+    <div class="card result-card">
+      <h2 class="result-title">Quiz Result</h2>
+
+      <div class="ring-wrap">
+        <svg class="ring" viewBox="0 0 160 160" aria-hidden="true">
+          <circle class="ring-bg" cx="80" cy="80" r="68"/>
+          <circle id="ringFg" class="ring-fg" cx="80" cy="80" r="68" transform="rotate(-90 80 80)"/>
+        </svg>
+        <div class="ring-center">
+          <div id="ringPct" class="ring-pct">0%</div>
+          <div id="ringScore" class="ring-score">0 / 0</div>
+        </div>
+      </div>
+
+      <div class="result-badges">
+        <div class="badge-box"><span>Grade</span><b id="resGrade">-</b></div>
+        <div id="resPassBox" class="badge-box"><span>Result</span><b id="resPass">-</b></div>
+      </div>
+
+      <div class="result-grid">
+        <div class="stat stat-good"><b id="resCorrect">0</b><span>Correct</span></div>
+        <div class="stat stat-bad"><b id="resWrong">0</b><span>Wrong</span></div>
+        <div class="stat stat-skip"><b id="resSkipped">0</b><span>Skipped</span></div>
+        <div class="stat"><b id="resTime">00:00</b><span>Time used</span></div>
+      </div>
+
+      <p class="muted small center">Pass mark = 50%. <span id="saveStatus"></span></p>
+
+      <h3 class="section-title">Performance by Topic</h3>
+      <div id="resTopicBars" class="topic-bars"></div>
+
+      <div class="result-actions">
+        <button id="retakeBtn" class="btn btn-primary" type="button">🔁 Retake</button>
+        <button id="newQuizBtn" class="btn btn-outline" type="button">🆕 New Quiz</button>
+        <button id="homeBtn" class="btn btn-ghost" type="button">🏠 Go Home</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <h3>Review All Answers</h3>
+        <div class="btn-row">
+          <button class="btn btn-ghost btn-sm" type="button" data-review="all">All</button>
+          <button class="btn btn-ghost btn-sm" type="button" data-review="wrong">Wrong</button>
+          <button class="btn btn-ghost btn-sm" type="button" data-review="skipped">Skipped</button>
+        </div>
+      </div>
+      <div id="reviewList" class="review-list"></div>
+    </div>
+  </section>
+
+  <!-- ============ MY SCORES SCREEN ============ -->
+  <section id="screen-scores" class="screen hidden">
+    <div class="card">
+      <div class="card-head">
+        <h3>📊 My Scores</h3>
+        <button id="scoresBackBtn" class="btn btn-ghost btn-sm" type="button">← Back</button>
+      </div>
+
+      <div class="result-grid">
+        <div class="stat"><b id="stTotal">0</b><span>Quizzes taken</span></div>
+        <div class="stat"><b id="stAvg">0%</b><span>Average</span></div>
+        <div class="stat stat-good"><b id="stBest">0%</b><span>Best</span></div>
+        <div class="stat"><b id="stLast">0%</b><span>Last</span></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3 class="section-title">Progress per Topic</h3>
+      <div id="stTopicBars" class="topic-bars"></div>
+      <div class="weak-strong">
+        <div><h4>💪 Strong topics</h4><ul id="stStrong" class="plain-list"></ul></div>
+        <div><h4>⚠ Weak topics</h4><ul id="stWeak" class="plain-list"></ul></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <h3>History</h3>
+        <button id="clearHistoryBtn" class="btn btn-danger btn-sm" type="button">Clear History</button>
+      </div>
+      <div class="table-wrap">
+        <table class="table">
+          <thead>
+            <tr><th>Date</th><th>Topics</th><th>Mode</th><th>Score</th><th>Total</th><th>%</th><th>Time Used</th></tr>
+          </thead>
+          <tbody id="historyBody"></tbody>
+        </table>
+      </div>
+      <p id="historyEmpty" class="muted center hidden">No quizzes taken yet.</p>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============ PAUSE OVERLAY ============ -->
+<div id="pauseOverlay" class="overlay hidden" role="dialog" aria-modal="true" aria-label="Quiz paused">
+  <div class="overlay-box">
+    <div class="overlay-ico">⏸</div>
+    <h3>Quiz Paused</h3>
+    <p class="muted">The timer is stopped. Questions are hidden while paused.</p>
+    <button id="resumeBtn" class="btn btn-primary btn-lg" type="button">▶ Resume</button>
+  </div>
+</div>
+
+<!-- ============ CONFIRM DIALOG ============ -->
+<div id="confirmOverlay" class="overlay hidden" role="dialog" aria-modal="true">
+  <div class="overlay-box">
+    <h3 id="confirmTitle">Are you sure?</h3>
+    <p id="confirmText" class="muted"></p>
+    <div class="btn-row center-row">
+      <button id="confirmNo" class="btn btn-outline" type="button">Cancel</button>
+      <button id="confirmYes" class="btn btn-danger" type="button">Yes</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ SETTINGS PANEL ============ -->
+<div id="settingsOverlay" class="overlay hidden" role="dialog" aria-modal="true" aria-label="Settings">
+  <div class="settings-box">
+    <div class="card-head">
+      <h3>⚙ Settings</h3>
+      <button id="settingsClose" class="icon-btn" type="button" aria-label="Close settings">✕</button>
+    </div>
+
+    <h4>Theme</h4>
+    <div id="themeGrid" class="theme-grid">
+      <button class="theme-swatch" type="button" data-theme="light"><i style="background:#ffffff;border-color:#0f766e"></i>Light</button>
+      <button class="theme-swatch" type="button" data-theme="dark"><i style="background:#1e293b"></i>Dark</button>
+      <button class="theme-swatch" type="button" data-theme="green"><i style="background:#16a34a"></i>Green</button>
+      <button class="theme-swatch" type="button" data-theme="blue"><i style="background:#2563eb"></i>Blue</button>
+      <button class="theme-swatch" type="button" data-theme="purple"><i style="background:#7c3aed"></i>Purple</button>
+      <button class="theme-swatch" type="button" data-theme="pink"><i style="background:#db2777"></i>Pink</button>
+      <button class="theme-swatch" type="button" data-theme="orange"><i style="background:#ea580c"></i>Orange</button>
+      <button class="theme-swatch" type="button" data-theme="amoled"><i style="background:#000000;border-color:#64748b"></i>Black / AMOLED</button>
+    </div>
+
+    <h4>Background</h4>
+    <div id="bgGrid" class="chip-row">
+      <button class="chip" type="button" data-bg="plain">Plain</button>
+      <button class="chip" type="button" data-bg="gradient">Gradient</button>
+      <button class="chip" type="button" data-bg="pattern">Pattern</button>
+    </div>
+
+    <h4>Font Size</h4>
+    <div id="fontGrid" class="chip-row">
+      <button class="chip" type="button" data-font="small">Small</button>
+      <button class="chip" type="button" data-font="medium">Medium</button>
+      <button class="chip" type="button" data-font="large">Large</button>
+    </div>
+
+    <p class="muted small">Settings are saved on this device and applied instantly.</p>
+    <button id="settingsDone" class="btn btn-primary btn-block" type="button">Done</button>
+  </div>
+</div>
+
+<!-- Toast -->
+<div id="toast" class="toast hidden" role="status"></div>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <span>© <span id="year">2026</span> cygna.co - cygna.consult</span>
+  <span class="footer-sub">Cygna MLS202 Pathology Quiz</span>
+</footer>
+
+<!-- Supabase JS (CDN, pinned) -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="supabase-config.js"></script>
+<script src="questions.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
